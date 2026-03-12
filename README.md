@@ -7,43 +7,6 @@ The system provides a simple travel planning experience where users can browse h
 This project was developed by **2 developers** and is included in my **developer portfolio**.
 
 
-# 📸 Screenshots
-
-![Home](image/image-2.png)
-
-![Home](image/image-3.png)
-
-![Home](image/image-4.png)
-
-![Home](image/image-5.png)
-
-![Home](image/image-6.png)
-
-![Home](image/image-7.png)
-
-![Home](image/image-8.png)
-
-![Home](image/image-9.png)
-
-![Home](image/image-10.png)
-
-![Home](image/image-11.png)
-
-![Home](image/image-12.png)
-
-![Home](image/image-13.png)
-
-![Home](image/image-14.png)
-
-![Home](image/image-15.png)
-
-![Home](image/image-16.png)
-
-![Home](image/image-17.png)
-
-![Home](image/image-18.png)
-
-
 # 🚀 Features
 
 ### Customer Features
@@ -83,6 +46,59 @@ This project was developed by **2 developers** and is included in my **developer
 
 ### API
 - RESTful API
+
+
+# 📸 Screenshots
+
+![Home](image/image-2.png)
+
+
+![Home](image/image-3.png)
+
+
+![Home](image/image-4.png)
+
+
+![Home](image/image-5.png)
+
+
+![Home](image/image-6.png)
+
+
+![Home](image/image-7.png)
+
+
+![Home](image/image-8.png)
+
+
+![Home](image/image-9.png)
+
+
+![Home](image/image-10.png)
+
+
+![Home](image/image-11.png)
+
+
+![Home](image/image-12.png)
+
+
+![Home](image/image-13.png)
+
+
+![Home](image/image-14.png)
+
+
+![Home](image/image-15.png)
+
+
+![Home](image/image-16.png)
+
+
+![Home](image/image-17.png)
+
+
+![Home](image/image-18.png)
 
 
 # ⚙️ Installation
