@@ -1,12 +1,27 @@
 # ✈️ Travel Booking Platform
 
-A web-based travel booking platform that allows users to search and book hotels and flights easily.  
-The system integrates an **AI-powered chatbot** that helps users quickly find travel information based on system data.
+A web-based travel booking platform that allows users to search and book hotels and flights easily
 This project was developed by 2 person and is included in my developer portfolio.
 
 # 📸 Screenshots
 
-![Home](images/image2.png)
+![Home](image/image-2.png)
+![Home](image/image-3.png)
+![Home](image/image-4.png)
+![Home](image/image-5.png)
+![Home](image/image-6.png)
+![Home](image/image-7.png)
+![Home](image/image-8.png)
+![Home](image/image-9.png)
+![Home](image/image-10.png)
+![Home](image/image-11.png)
+![Home](image/image-12.png)
+![Home](image/image-13.png)
+![Home](image/image-14.png)
+![Home](image/image-15.png)
+![Home](image/image-16.png)
+![Home](image/image-17.png)
+![Home](image/image-18.png)
 
 # 🚀 Features
 
@@ -17,19 +32,14 @@ This project was developed by 2 person and is included in my developer portfolio
 - **Hotel Information** – View detailed hotel information including amenities, images, and location.
 - **Room Details** – View detailed information about available room types.
 - **Comments & Reviews** – Users can leave comments and feedback on hotels.
-- **AI Chatbot** – AI-powered assistant that answers travel-related questions based on system data.
-
+- **Management functions**
+  
 # 🛠 Tech Stack
 - React / HTML / CSS
 - Express.js
 - JWT / Cloudinary
 - MongoDB
-
-### Other Technologies
 - RESTful API
-- AI Chatbot Integration
-
----
 
 # 🏗 System Architecture
 
