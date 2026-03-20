@@ -12,16 +12,11 @@ import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import AirplaneTicketOutlinedIcon from "@mui/icons-material/AirplaneTicketOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import DiscountOutlinedIcon from "@mui/icons-material/DiscountOutlined";
-import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 import "../Style/sidebar.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("accessToken");
-  const decodedToken = jwtDecode(token);
-  const userRole = decodedToken.role;
 
   // Hàm để xử lý logout
   const handleLogout = () => {
@@ -39,148 +34,96 @@ const Sidebar = () => {
       <hr />
       <div className="bottom">
         <ul>
-          {userRole === 4 && (
-            <>
-              {/* <p className="title">MAIN</p>
-              <Link to="/admin/" style={{ textDecoration: "none" }}>
-                <li>
-                  <DashboardIcon className="icon" />
-                  <span>Dashboard</span>
-                </li>
-              </Link> */}
+          <p className="title">MAIN</p>
+          <Link to="/admin/" style={{ textDecoration: "none" }}>
+            <li>
+              <DashboardIcon className="icon" />
+              <span>Dashboard</span>
+            </li>
+          </Link>
 
-              <p className="title">LIST</p>
-
-              {/* ✅ Role 4 chỉ xem Booking + Hotel + Room */}
-              <Link to="/admin/orders" style={{ textDecoration: "none" }}>
-                <li>
-                  <LocalGroceryStoreOutlined className="icon" />
-                  <span>Booking</span>
-                </li>
-              </Link>
-
-              <Link to="/admin/hotels" style={{ textDecoration: "none" }}>
-                <li>
-                  <DomainOutlinedIcon className="icon" />
-                  <span>Hotel</span>
-                </li>
-              </Link>
-
-              <Link to="/admin/rooms" style={{ textDecoration: "none" }}>
-                <li>
-                  <LoyaltyIcon className="icon" />
-                  <span>Room</span>
-                </li>
-              </Link>
-
-              <li onClick={handleLogout}>
-                <ExitToAppOutlinedIcon className="icon" />
-                <span>Logout</span>
-              </li>
-            </>
-          )}
-
-          {userRole !== 4 && (
-            <>
-              <p className="title">MAIN</p>
-              <Link to="/admin/" style={{ textDecoration: "none" }}>
-                <li>
-                  <DashboardIcon className="icon" />
-                  <span>Dashboard</span>
-                </li>
-              </Link>
-
-              {/* <Link to="/admin/" style={{ textDecoration: "none" }}>
+          {/* <Link to="/admin/" style={{ textDecoration: "none" }}>
             <li>
               <ManageAccountsOutlinedIcon className="icon" />
               <span>Profile</span>
             </li>
           </Link> */}
 
-              {/* <Link to="/admin/" style={{ textDecoration: "none" }}>
+          {/* <Link to="/admin/" style={{ textDecoration: "none" }}>
             <li>
               <CalendarMonthOutlinedIcon className="icon" />
               <span>Calendar</span>
             </li>
           </Link> */}
 
-              <li onClick={handleLogout}>
-                <ExitToAppOutlinedIcon className="icon" />
-                <span>Logout</span>
-              </li>
+          <li onClick={handleLogout}>
+            <ExitToAppOutlinedIcon className="icon" />
+            <span>Logout</span>
+          </li>
 
-              <p className="title">LIST</p>
-              <Link to="/admin/users" style={{ textDecoration: "none" }}>
-                <li>
-                  <Person3OutlinedIcon className="icon" />
-                  <span>Users</span>
-                </li>
-              </Link>
+          <p className="title">LIST</p>
+          <Link to="/admin/users" style={{ textDecoration: "none" }}>
+            <li>
+              <Person3OutlinedIcon className="icon" />
+              <span>Users</span>
+            </li>
+          </Link>
 
-              {/* <Link to="/admin/homes" style={{ textDecoration: "none" }}>
+          {/* <Link to="/admin/homes" style={{ textDecoration: "none" }}>
             <li>
               <TourIcon className="icon" />
               <span>HomeStay</span>
             </li>
           </Link> */}
 
-              <Link to="/admin/orders" style={{ textDecoration: "none" }}>
-                <li>
-                  <LocalGroceryStoreOutlined className="icon" />
-                  <span>Booking</span>
-                </li>
-              </Link>
+          <Link to="/admin/orders" style={{ textDecoration: "none" }}>
+            <li>
+              <LocalGroceryStoreOutlined className="icon" />
+              <span>Orders</span>
+            </li>
+          </Link>
 
-              <Link to="/admin/hotels" style={{ textDecoration: "none" }}>
-                <li>
-                  <DomainOutlinedIcon className="icon" />
-                  <span>Hotels & Services</span>
-                </li>
-              </Link>
+          <Link to="/admin/hotels" style={{ textDecoration: "none" }}>
+            <li>
+              <DomainOutlinedIcon className="icon" />
+              <span>Hotels & Services</span>
+            </li>
+          </Link>
 
-              <Link to="/admin/airlines" style={{ textDecoration: "none" }}>
-                <li>
-                  <AirplaneTicketOutlinedIcon className="icon" />
-                  <span>Airline Tickets</span>
-                </li>
-              </Link>
+          <Link to="/admin/airlines" style={{ textDecoration: "none" }}>
+            <li>
+              <AirplaneTicketOutlinedIcon className="icon" />
+              <span>Airline Tickets</span>
+            </li>
+          </Link>
 
-              <Link to="/admin/rooms" style={{ textDecoration: "none" }}>
-                <li>
-                  <LoyaltyIcon className="icon" />
-                  <span>Room</span>
-                </li>
-              </Link>
+          <Link to="/admin/rooms" style={{ textDecoration: "none" }}>
+            <li>
+              <LoyaltyIcon className="icon" />
+              <span>Room</span>
+            </li>
+          </Link>
 
-              <Link to="/admin/vouchers" style={{ textDecoration: "none" }}>
-                <li>
-                  <DiscountOutlinedIcon className="icon" />
-                  <span>Vouchers</span>
-                </li>
-              </Link>
+          <Link to="/admin/vouchers" style={{ textDecoration: "none" }}>
+            <li>
+              <DiscountOutlinedIcon className="icon" />
+              <span>Vouchers</span>
+            </li>
+          </Link>
 
-              <Link to="/admin/reviews" style={{ textDecoration: "none" }}>
-                <li>
-                  <DnsOutlinedIcon className="icon" />
-                  <span>Hotel Comments</span>
-                </li>
-              </Link>
+          <Link to="/admin/reviews" style={{ textDecoration: "none" }}>
+            <li>
+              <DnsOutlinedIcon className="icon" />
+              <span>Hotel Comments</span>
+            </li>
+          </Link>
 
-              <Link to="/admin/transactions" style={{ textDecoration: "none" }}>
-                <li>
-                  <ReceiptLongOutlinedIcon className="icon" />
-                  <span>Transaction</span>
-                </li>
-              </Link>
-
-              {/* <Link to="/admin/notifications" style={{ textDecoration: "none" }}>
+          {/* <Link to="/admin/notifications" style={{ textDecoration: "none" }}>
             <li>
               <NotificationsActiveOutlinedIcon className="icon" />
               <span>Notifications</span>
             </li>
           </Link> */}
-            </>
-          )}
         </ul>
       </div>
     </div>

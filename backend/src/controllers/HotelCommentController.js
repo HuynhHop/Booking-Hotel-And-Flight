@@ -46,11 +46,11 @@ class HotelCommentController {
         await comment.save();
         console.log("✅ Bình luận đã được lưu");
 
-        // try {
-        //   await updateHotelRating(hotelId);
-        // } catch (err) {
-        //   console.error("❌ Lỗi khi gọi updateHotelRating:", err);
-        // }
+        try {
+          await updateHotelRating(hotelId);
+        } catch (err) {
+          console.error("❌ Lỗi khi gọi updateHotelRating:", err);
+        }
 
         res.status(201).json(comment);
       } catch (error) {
@@ -103,7 +103,7 @@ class HotelCommentController {
       await HotelComment.deleteOne({ _id: commentId });
 
       // Sau khi xóa comment thành công, cập nhật rating của khách sạn
-      // await updateHotelRating(hotelId);
+      await updateHotelRating(hotelId);
 
       res.status(200).json({ message: "Đã xóa bình luận" });
     } catch (error) {

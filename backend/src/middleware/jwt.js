@@ -8,8 +8,8 @@ const Role = require("../models/Role");
 const path = require("path");
 const privateKeyPath = path.join(__dirname, "../public/private.pem");
 const privateKey = fs.readFileSync(privateKeyPath, "utf8");
-const generateAccessToken = (uid, role, hotelId) =>
-  jwt.sign({ _id: uid, role, hotelId }, privateKey, {
+const generateAccessToken = (uid, role) =>
+  jwt.sign({ _id: uid, role }, privateKey, {
     expiresIn: "2d",
     algorithm: "RS256",
   });
@@ -57,7 +57,7 @@ const isAdmin = async (req, res, next) => {
   try {
     const { role } = req.user;
     const userRole = await Role.findById(role);
-    if (!userRole || (userRole?.name !== "Admin" && userRole?.name !== "Staff"))
+    if (!userRole || userRole?.name !== "Admin")
       return res
         .status(401)
         .json({ success: false, message: "REQUIRE ADMIN ROLE" });

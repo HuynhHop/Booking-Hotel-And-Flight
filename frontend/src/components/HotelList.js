@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const provinces = ["Hồ Chí Minh", "Hà Nội", "Đà Nẵng", "Huế", "Nha Trang"];
+const provinces = ["Hồ Chí Minh", "Hà Nội", "Đà Nẵng", "Huế"];
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const amenityIcons = {
@@ -110,214 +110,292 @@ const HotelList = () => {
   const displayedHotels = showAll ? hotels : hotels.slice(0, 8);
 
   return (
+  <div
+    style={{
+      padding: "30px",
+      background: "#f5efef",
+      minHeight: "100vh",
+      maxWidth: "1300px",
+      margin: "0 auto"
+    }}
+  >
+    <h2 style={{ marginBottom: "20px" }}>Khách sạn nổi bật</h2>
+
+    {/* Filter */}
     <div
       style={{
-        padding: "30px",
-        background: "#f7f9fc",
-        minHeight: "100vh",
-        maxWidth: "1300px",
-        margin: "0 auto"
-      }}
+        display: "flex",
+        gap: "15px",
+        marginBottom: "25px",
+        flexWrap: "wrap"
+      }}  
     >
-      <h2 style={{ marginBottom: "20px" }}>Khách sạn nổi bật</h2>
-
-      {/* Bộ lọc tỉnh */}
-      <div
+      <button
+        onClick={() => setSelectedProvince("")}
         style={{
-          display: "flex",
-          gap: "20px",
-          marginBottom: "20px",
-          flexWrap: "wrap"
+          padding: "8px 18px",
+          background: selectedProvince === "" ? "#007BFF" : "#987f7f",
+          color: selectedProvince === "" ? "white" : "#333",
+          borderRadius: "20px",
+          border: "none",
+          cursor: "pointer"
         }}
       >
+        Tất cả
+      </button>
+
+      {provinces.map((province) => (
         <button
-          onClick={() => setSelectedProvince("")}
+          key={province}
+          onClick={() => setSelectedProvince(province)}
           style={{
-            padding: "10px 20px",
-            background: selectedProvince === "" ? "#007BFF" : "#ddd",
-            color: selectedProvince === "" ? "white" : "black",
+            padding: "8px 18px",
+            background: selectedProvince === province ? "#007BFF" : "#efafaf",
+            color: selectedProvince === province ? "white" : "#333",
             borderRadius: "20px",
             border: "none",
             cursor: "pointer"
           }}
         >
-          Tất cả
+          {province}
         </button>
-        {provinces.map((province) => (
-          <button
-            key={province}
-            onClick={() => setSelectedProvince(province)}
-            style={{
-              padding: "10px 20px",
-              background: selectedProvince === province ? "#007BFF" : "#ddd",
-              color: selectedProvince === province ? "white" : "black",
-              borderRadius: "20px",
-              border: "none",
-              cursor: "pointer"
-            }}
-          >
-            {province}
-          </button>
-        ))}
-      </div>
+      ))}
+    </div>
 
-      {/* Danh sách khách sạn */}
-      {loading ? (
-        <CircularProgress />
-      ) : (
-        <>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "25px",
-              marginLeft: "25px"
-            }}
-          >
-            {displayedHotels.length > 0 ? (
-              displayedHotels.map((hotel, index) => {
-                const isFavorite = favoriteHotelIds.includes(hotel._id);
-                return (
-                  <div
-                    key={hotel._id}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                    style={{
-                      width: "280px",
-                      borderRadius: "12px",
-                      overflow: "hidden",
-                      boxShadow: hoveredIndex === index
-                        ? "0 8px 20px rgba(0,0,0,0.15)"
-                        : "0 5px 15px rgba(0,0,0,0.1)",
-                      background: "white",
-                      transition: "transform 0.3s, box-shadow 0.3s",
-                      transform: hoveredIndex === index ? "translateY(-5px)" : "translateY(0)",
-                      position: "relative",
-                      cursor: "pointer"
-                    }}
-                  >
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: 10,
-                        right: 10,
-                        zIndex: 2
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleFavorite(hotel._id);
-                      }}
-                    >
-                      <FaHeart
-                        size={20}
-                        color={isFavorite ? "#e74c3c" : "#ccc"}
-                        style={{ cursor: "pointer" }}
-                      />
-                    </div>
-                    <img
-                      src={
-                        hotel.images[0] ||
-                        "https://via.placeholder.com/280x180?text=No+Image"
-                      }
-                      alt={hotel.name}
-                      onClick={() => navigate(`/hotelInfo?id=${hotel._id}`)}
-                      style={{ width: "100%", height: "180px", objectFit: "cover" }}
-                    />
-                    <div style={{ padding: "15px" }}>
-                      <h3
-                        style={{
-                          margin: "5px 0",
-                          fontSize: "18px",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis"
-                        }}
-                        title={hotel.name}
-                      >
-                        {hotel.name}
-                      </h3>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          marginBottom: "8px"
-                        }}
-                      >
-                        <span style={{ fontSize: "14px", color: "#666" }}>
-                          {hotel.province}
-                        </span>
-                        <span style={{ fontSize: "14px", color: "#f39c12" }}>
-                          ⭐ {hotel.starRating || "?"}
-                        </span>
-                      </div>
+    {/* List */}
+    {loading ? (
+      <CircularProgress />
+    ) : (
+      <>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "35.5px"
+          }}
+        >
+          {displayedHotels.map((hotel, index) => {
+            const isFavorite = favoriteHotelIds.includes(hotel._id);
+            const hasDiscount =
+              hotel.oldPricePerNight &&
+              hotel.oldPricePerNight > hotel.pricePerNight;
 
-                      {/* Tiện nghi */}
-                      <div
-                        style={{
-                          display: "flex",
-                          flexWrap: "wrap",
-                          gap: "6px",
-                          marginBottom: "10px"
-                        }}
-                      >
-                        {hotel.amenities?.slice(0, 3).map((amenity, idx) => (
-                          <span
-                            key={idx}
-                            title={amenity}
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              fontSize: "13px",
-                              background: "#f0f0f0",
-                              padding: "4px 8px",
-                              borderRadius: "12px",
-                              gap: "4px"
-                            }}
-                          >
-                            {amenityIcons[amenity]} {amenity}
-                          </span>
-                        ))}
-                      </div>
+            const discountPercent = hasDiscount
+              ? Math.round(
+                  ((hotel.oldPricePerNight - hotel.pricePerNight) /
+                    hotel.oldPricePerNight) *
+                    100
+                )
+              : 0;
 
-                      <p style={{ fontSize: "16px", margin: "5px 0" }}>
-                        <b style={{ color: "#e74c3c" }}>
-                          {hotel.pricePerNight.toLocaleString()} đ
-                        </b>
-                      </p>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <p>Không có khách sạn nào phù hợp.</p>
-            )}
-          </div>
-
-          {/* Nút xem thêm */}
-          {hotels.length > 8 && (
-            <div style={{ textAlign: "center", marginTop: "30px" }}>
-              <button
-                onClick={() => setShowAll(!showAll)}
+            return (
+              <div
+                key={hotel._id}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                onClick={() => navigate(`/hotelInfo?id=${hotel._id}`)}
                 style={{
-                  padding: "12px 30px",
-                  background: "#007BFF",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "30px",
-                  fontSize: "16px",
+                  width: "280px",
+                  borderRadius: "16px",
+                  overflow: "hidden",
+                  background: "white",
                   cursor: "pointer",
-                  boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-                  transition: "background 0.3s"
+                  transition: "all 0.3s ease",
+                  transform:
+                    hoveredIndex === index
+                      ? "translateY(-6px)"
+                      : "translateY(0)",
+                  boxShadow:
+                    hoveredIndex === index
+                      ? "0 12px 30px rgba(0,0,0,0.2)"
+                      : "0 5px 15px rgba(0,0,0,0.08)",
+                  position: "relative"
                 }}
               >
-                {showAll ? "Thu gọn" : "Xem tất cả"}
-              </button>
-            </div>
-          )}
-        </>
-      )}
-    </div>
-  );
+                {/* Discount badge */}
+                {hasDiscount && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 10,
+                      left: 10,
+                      background: "#ff4757",
+                      color: "white",
+                      padding: "4px 8px",
+                      borderRadius: "8px",
+                      fontSize: "12px",
+                      zIndex: 2
+                    }}
+                  >
+                    🔥 -{discountPercent}%
+                  </div>
+                )}
+
+                {/* Favorite */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 10,
+                    right: 10,
+                    zIndex: 2,
+
+                    width: "36px",
+                    height: "36px",
+
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+
+                    background: "rgba(255,255,255,0.95)",
+                    borderRadius: "50%",
+
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease"
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFavorite(hotel._id);
+                  }}
+                >
+                  <FaHeart
+                    size={16}
+                    color={isFavorite ? "#e74c3c" : "#ccc"}
+                  />
+                </div>
+
+                {/* Image */}
+                <img
+                  src={
+                    hotel.images[0] ||
+                    "https://via.placeholder.com/280x180"
+                  }
+                  alt={hotel.name}
+                  style={{
+                    width: "100%",
+                    height: "180px",
+                    objectFit: "cover",
+                    transition: "0.4s"
+                  }}
+                />
+
+                {/* Content */}
+                <div style={{ padding: "15px" }}>
+                  <h3
+                    style={{
+                      fontSize: "17px",
+                      margin: "5px 0",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis"
+                    }}
+                  >
+                    {hotel.name}
+                  </h3>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "8px"
+                    }}
+                  >
+                    <span style={{ fontSize: "14px", color: "#666" }}>
+                      {hotel.province}
+                    </span>
+
+                    <span
+                      style={{
+                        background: "#f1c40f",
+                        padding: "2px 6px",
+                        borderRadius: "6px",
+                        fontSize: "12px",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      {hotel.starRating || "?"} ★
+                    </span>
+                  </div>
+
+                  {/* Amenities */}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "6px",
+                      marginBottom: "10px"
+                    }}
+                  >
+                    {hotel.amenities?.slice(0, 3).map((amenity, idx) => (
+                      <span
+                        key={idx}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          fontSize: "12px",
+                          background: "#f1f3f5",
+                          padding: "4px 8px",
+                          borderRadius: "12px",
+                          gap: "4px"
+                        }}
+                      >
+                        {amenityIcons[amenity]} {amenity}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Price */}
+                  <div>
+                    {hasDiscount && (
+                      <div
+                        style={{
+                          fontSize: "13px",
+                          color: "#999",
+                          textDecoration: "line-through"
+                        }}
+                      >
+                        {hotel.oldPricePerNight.toLocaleString()} đ
+                      </div>
+                    )}
+
+                    <div
+                      style={{
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        color: "#e74c3c"
+                      }}
+                    >
+                      {hotel.pricePerNight.toLocaleString()} đ
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Show more */}
+        {hotels.length > 8 && (
+          <div style={{ textAlign: "center", marginTop: "30px" }}>
+            <button
+              onClick={() => setShowAll(!showAll)}
+              style={{
+                padding: "12px 30px",
+                background: "#007BFF",
+                color: "white",
+                border: "none",
+                borderRadius: "30px",
+                cursor: "pointer"
+              }}
+            >
+              {showAll ? "Thu gọn" : "Xem thêm"}
+            </button>
+          </div>
+        )}
+      </>
+    )}
+  </div>
+);
 };
 
 export default HotelList;

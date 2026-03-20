@@ -99,7 +99,7 @@ const Edit = ({ inputs, title }) => {
           }
 
           if (resourceType === "room") {
-            fetchedData.hotelId = fetchedData.hotel._id;
+            fetchedData.hotel = fetchedData.hotel._id;
           }
 
           if (fetchedData.images) {
@@ -191,15 +191,27 @@ const Edit = ({ inputs, title }) => {
     }
 
     if (processedFormData["amenities"]) {
-      processedFormData["amenities"] = processedFormData["amenities"]
-        .split(",")
-        .map((item) => item.trim()); // Chuyển đổi chuỗi thành mảng
+      if (Array.isArray(processedFormData["amenities"])) {
+        // đã là array → stringify luôn
+        processedFormData["amenities"] = JSON.stringify(
+          processedFormData["amenities"]
+        );
+      } else {
+        // là string → split
+        processedFormData["amenities"] = JSON.stringify(
+          processedFormData["amenities"]
+            .split(",")
+            .map((item) => item.trim())
+        );
+      }
     }
 
     const data = new FormData();
 
     // Add form data fields to FormData object
     Object.keys(processedFormData).forEach((key) => {
+      if (key === "images") return; // ❌ bỏ images ra
+
       data.append(key, processedFormData[key]);
     });
 
@@ -218,6 +230,7 @@ const Edit = ({ inputs, title }) => {
     if (existingImages.length > 0) {
       data.append("existingImages", JSON.stringify(existingImages));
     }
+    delete data.existingImages;
 
     try {
       const response = await fetch(`${apiUrl}/${resourceType}s/${resourceId}`, {

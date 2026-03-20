@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../css/BookingHistory.css";
-import { FaTimes } from "react-icons/fa";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import "../css/BookingHistory.css"; // Tái sử dụng CSS chung hoặc tạo riêng nếu cần
 
 const FlightHistory = () => {
   const [orders, setOrders] = useState([]);
@@ -25,35 +22,6 @@ const FlightHistory = () => {
     fetchOrders();
   }, [apiUrl]);
 
-  const handleCancelFlight = async (orderId) => {
-    try {
-      const response = await fetch(`${apiUrl}/order-flight/${orderId}/payment-status`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status: "processing" }),
-      });
-
-      if (response.ok) {
-        toast.success("Yêu cầu hủy vé đã được gửi đến quản trị viên", {
-          position: "top-right",
-          autoClose: 3000,
-        });
-
-        const updatedOrders = orders.map(order =>
-          order._id === orderId ? { ...order, status: "processing" } : order
-        );
-        setOrders(updatedOrders);
-      } else {
-        toast.error("Hủy vé không thành công");
-      }
-    } catch (error) {
-      console.error("Error cancelling flight:", error);
-      toast.error("Đã xảy ra lỗi khi hủy vé");
-    }
-  };
-
   const getStatusClass = (status) => {
     switch (status) {
       case "pending":
@@ -62,8 +30,6 @@ const FlightHistory = () => {
         return "status-confirmed";
       case "cancelled":
         return "status-cancelled";
-      case "processing":
-        return "status-processing";
       default:
         return "status-default";
     }
@@ -72,17 +38,16 @@ const FlightHistory = () => {
   return (
     <div className="booking-history">
       <h3>Danh sách vé máy bay đã đặt</h3>
-      <ToastContainer />
       <p>Xem lại các đơn đặt vé máy bay của bạn tại đây.</p>
       {orders.length > 0 ? (
         orders.map((order) => (
           <div key={order._id} className="order-item form-grid">
             <div className="order-image">
               <img
-                src={order.flight?.image || "https://via.placeholder.com/150"}
-                alt={order.flight?.airline}
-                className="flight-logo"
-              />
+              src={order.flight?.image || "https://via.placeholder.com/150"}
+              alt={order.flight?.airline}
+              className="flight-logo"
+            />
             </div>
             <div className="order-details">
               <h4 className="hotel-name">Thông tin chuyến bay</h4>
@@ -127,14 +92,6 @@ const FlightHistory = () => {
                 <span className="note">{order.note || "Không có ghi chú"}</span>
               </p>
             </div>
-            {(order.status === "confirmed" || order.status === "pending") && (
-              <button
-                className="cancel-button"
-                onClick={() => handleCancelFlight(order._id)}
-              >
-                <FaTimes /> Hủy vé
-              </button>
-            )}
           </div>
         ))
       ) : (

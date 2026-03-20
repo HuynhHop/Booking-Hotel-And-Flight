@@ -27,50 +27,33 @@ const AccountManagement = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const handleAvatarChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       setFormData({ ...formData, avatar: reader.result });
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const previewUrl = URL.createObjectURL(file); // tạo URL ảnh tạm
-
-      setFormData((prev) => ({
-        ...prev,
-        avatar: file, // file dùng để gửi lên server
-        avatarPreview: previewUrl, // dùng để hiển thị
-      }));
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFormData({ ...formData, avatar: reader.result });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const handleUpdateProfile = async () => {
     try {
       const token = localStorage.getItem("accessToken");
-      const form = new FormData();
-      form.append("avatar", formData.avatar);
-      form.append("fullname", formData.fullname);
-      form.append("phone", formData.phone);
       const response = await fetch(`${apiUrl}/user/`, {
         method: "PUT",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: form,
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
-
-      if (data.success) {
+      if (response.ok) {
         alert("Cập nhật thông tin thành công!");
-        localStorage.setItem("user", JSON.stringify(data.updatedUser)); // Cập nhật localStorage
+        localStorage.setItem("user", JSON.stringify({ ...formData })); // Cập nhật localStorage
       } else {
         alert(data.message || "Cập nhật thông tin thất bại!");
       }
@@ -115,7 +98,7 @@ const AccountManagement = () => {
 
       <div className="avatar-section">
         <img
-          src={formData.avatarPreview || formData.avatar}
+          src={formData.avatar}
           alt="Avatar"
           className="avatar"
           onClick={() => document.getElementById("avatarInput").click()}

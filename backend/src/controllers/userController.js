@@ -11,7 +11,6 @@ const { generateAccessToken } = require("../middleware/jwt");
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const { sendMail } = require("../util/sendMail");
-const Hotel = require("../models/Hotel");
 class UserController {
   //[GET] /user/:id
   async getById(req, res) {
@@ -303,51 +302,6 @@ class UserController {
         message: "An error occurred",
         error: err.message,
       });
-    }
-  }
-
-  async createHotelManager(req, res) {
-    try {
-      imageUpload.single("avatar")(req, res, async (err) => {
-        if (err) {
-          return res.status(500).json({
-            success: false,
-            message: "Error uploading image",
-            error: err.message,
-          });
-        }
-        const { username, password, fullname, email, phone, hotelId } =
-          req.body;
-
-        // Kiểm tra xem khách sạn có tồn tại không
-        const hotel = await Hotel.findById(hotelId);
-        if (!hotel) {
-          return res
-            .status(404)
-            .json({ success: false, message: "Hotel not found" });
-        }
-
-        // Tạo tài khoản HotelManager
-        const newUser = new User({
-          username,
-          password,
-          fullname,
-          email,
-          phone,
-          role: 4,
-          hotelId,
-        });
-        if (req.file && req.file.path) {
-          req.body.avatar = req.file.path;
-        }
-
-        await newUser.save();
-
-        res.status(201).json({ success: true, data: newUser });
-      });
-    } catch (error) {
-      console.error("Error creating HotelManager:", error);
-      res.status(500).json({ success: false, message: error.message });
     }
   }
 
@@ -888,11 +842,7 @@ class UserController {
         // Phải dùng (plain Obj) để đưa instance mongooseDB về thành object thường
         const { password, role, ...userData } = response.toObject();
         //Tạo accessToken
-        const accessToken = generateAccessToken(
-          response._id,
-          role,
-          response.hotelId
-        );
+        const accessToken = generateAccessToken(response._id, role);
 
         return res.status(200).json({ success: true, accessToken, userData });
       } else {

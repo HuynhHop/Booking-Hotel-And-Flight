@@ -1,9 +1,9 @@
 export const userColumns = [
-  // { field: "id", headerName: "ID", width: 100 },
+  { field: "id", headerName: "ID", width: 100 },
   {
     field: "user",
     headerName: "Username",
-    width: 230,
+    width: 250,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
@@ -13,19 +13,19 @@ export const userColumns = [
       );
     },
   },
-  { field: "email", headerName: "Email", width: 200 },
+  { field: "email", headerName: "Email", width: 190 },
   {
     field: "phone",
     headerName: "Phone",
     type: "number",
-    width: 150,
+    width: 130,
     headerAlign: "center",
     align: "center",
   },
   {
     field: "fullname",
     headerName: "Fullname",
-    width: 200,
+    width: 130,
   },
   {
     field: "provider",
@@ -33,8 +33,8 @@ export const userColumns = [
     width: 100,
   },
   {
-    field: "roleName",
+    field: "role",
     headerName: "Role",
-    width: 100,
+    width: 70,
   },
 ];

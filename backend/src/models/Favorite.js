@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const favoriteSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   hotelId: { type: mongoose.Schema.Types.ObjectId, ref: "Hotel", required: true },
+  alertThreshold: { type: Number, default: 10 },
   createdAt: { type: Date, default: Date.now }
 });
 

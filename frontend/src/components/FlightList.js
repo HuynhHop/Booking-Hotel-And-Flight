@@ -74,7 +74,7 @@ const FlightList = () => {
                 </p>
                 <p className="flight-price-final">
                   <span>Giá sau thuế: </span>
-                  <strong>{flight.taxPrice.toLocaleString()} ₫</strong>
+                  <strong>{(flight.originalPrice - flight.taxPrice).toLocaleString()} ₫</strong>
                 </p>
                 <button
                   className="flight-book"
@@ -93,7 +93,7 @@ const FlightList = () => {
       {filteredFlights.length > 6 && (
         <div className="flight-show-more">
           <button onClick={() => setShowAll(!showAll)}>
-            {showAll ? "Ẩn bớt" : "Xem tất cả"}
+            {showAll ? "Ẩn bớt" : "Xem thêm"}
           </button>
         </div>
       )}

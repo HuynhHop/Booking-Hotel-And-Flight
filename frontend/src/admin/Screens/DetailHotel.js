@@ -7,13 +7,10 @@ import Navbar from "../Components/Navbar";
 import Chart from "../Config/Chart";
 import List from "../Components/List";
 import "../Style/detailHotel.scss";
-import { DataGrid } from "@mui/x-data-grid";
-import { Paper } from "@mui/material";
 
 const DetailHotel = () => {
   const { hotelId } = useParams(); // Lấy hotelId từ URL
   const [hotelData, setHotelData] = useState(null);
-  const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -37,41 +34,8 @@ const DetailHotel = () => {
       }
     };
 
-    const fetchRooms = async () => {
-      try {
-        const response = await fetch(`${apiUrl}/rooms/hotel/${hotelId}`);
-        const data = await response.json();
-        if (data.success) {
-          const formattedRooms = data.data.map((room) => ({
-            id: room._id,
-            ...room,
-          }));
-          setRooms(formattedRooms);
-        } else {
-          console.error("Failed to fetch rooms", data.message);
-        }
-      } catch (err) {
-        console.error("Error fetching rooms:", err);
-      }
-    };
-
     fetchHotelDetails();
-    fetchRooms();
   }, [hotelId, apiUrl]);
-
-  const handleDeleteRoom = async (roomId) => {
-    try {
-      const response = await fetch(`${apiUrl}/rooms/${roomId}`, {
-        method: "DELETE",
-      });
-      const result = await response.json();
-      if (result.success) {
-        setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
-      }
-    } catch (error) {
-      console.error("Error deleting room:", error);
-    }
-  };
 
   const images = hotelData?.images || ["/assets/default-avatar.jpg"];
 
@@ -86,35 +50,6 @@ const DetailHotel = () => {
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
   };
-
-  const roomColumns = [
-    { field: "name", headerName: "Room Name", width: 300 },
-    { field: "people", headerName: "People", width: 150 },
-    { field: "beds", headerName: "Beds", width: 200 },
-    { field: "area", headerName: "Area", width: 150 },
-    { field: "price", headerName: "Price", width: 100 },
-    {
-      field: "action",
-      headerName: "Action",
-      width: 150,
-      renderCell: (params) => (
-        <div className="cellAction">
-          <Link
-            to={`/admin/rooms/${params.row.id}/edit`}
-            style={{ textDecoration: "none" }}
-          >
-            <div className="viewButton">Edit</div>
-          </Link>
-          <div
-            className="deleteButton"
-            onClick={() => handleDeleteRoom(params.row.id)}
-          >
-            Delete
-          </div>
-        </div>
-      ),
-    },
-  ];
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
@@ -263,34 +198,6 @@ const DetailHotel = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="bottom">
-          <div className="roomList">
-            <div className="datatableTitle">
-              <span>List Of Hotel Rooms</span>
-              <Link
-                to={`/admin/rooms/roomId/new?hotelId=${hotelId}`}
-                style={{ textDecoration: "none" }}
-              >
-                <span className="link">Add New Room</span>
-              </Link>
-            </div>
-            <Paper className="productContainer">
-              <DataGrid
-                className="datagrid"
-                rows={rooms}
-                columns={roomColumns}
-                pageSize={10}
-                pageSizeOptions={[5, 10, 20, 50, 100]}
-                checkboxSelection
-                initialState={{
-                  pagination: {
-                    paginationModel: { pageSize: 5, page: 0 },
-                  },
-                }}
-              />
-            </Paper>
           </div>
         </div>
         {/* <div className="right">

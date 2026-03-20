@@ -10,18 +10,26 @@ const sendMail = async (action, { email, html }) => {
         pass: process.env.EMAIL_APP_PASSWORD,
       },
     });
+
     const info = await transporter.sendMail({
-      from: '"Mytour" <no-reply@tourvn.gmail.com>', // sender address
-      to: email, // list of receivers
-      subject: action, // Subject line
-      text: "Hello world", // plain text body
-      html: html, // html body
+      from: `"Booking System" <${process.env.EMAIL_NAME}>`,
+      to: email,
+      subject: action,
+      html: html,
     });
+
     return info;
   } catch (error) {
+    console.error("Send mail error:", error);
     throw new Error(error);
   }
 };
+
+// const sendMail = async (action, { email, html }) => {
+//   await new Promise(resolve => setTimeout(resolve, 200));
+//   console.log("📧 SEND TO:", email);
+//   return true;
+// };
 
 const sendMailRegister = async ({ email, html }) => {
   try {
@@ -70,7 +78,7 @@ const sendMailEditProfile = async ({ email, html }) => {
   }
 };
 
-const sendMailReviewHotel = async ({ email, html }) => {
+const sendMailCancelPackage = async ({ email, html }) => {
   try {
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -82,9 +90,9 @@ const sendMailReviewHotel = async ({ email, html }) => {
       },
     });
     const info = await transporter.sendMail({
-      from: '"Mytour" <no-reply@tour.gmail.com>', // sender address
+      from: '"Speaking English" <no-reply@speakingen.gmail.com>', // sender address
       to: email, // list of receivers
-      subject: "Review Hotel Notification", // Subject line
+      subject: "Package Cancelled Notification", // Subject line
       text: "Hello world", // plain text body
       html: html, // html body
     });
@@ -94,9 +102,4 @@ const sendMailReviewHotel = async ({ email, html }) => {
   }
 };
 
-module.exports = {
-  sendMail,
-  sendMailRegister,
-  sendMailEditProfile,
-  sendMailReviewHotel,
-};
+module.exports = { sendMail, sendMailRegister, sendMailEditProfile, sendMailCancelPackage };

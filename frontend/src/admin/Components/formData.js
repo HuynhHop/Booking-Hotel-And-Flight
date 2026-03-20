@@ -43,59 +43,6 @@ export const userInputs = [
   },
 ];
 
-export const managerInputs = [
-  {
-    id: 1,
-    label: "Username",
-    name: "username",
-    type: "text",
-    placeholder: "Enter your username",
-  },
-  {
-    id: 2,
-    label: "Fullname",
-    name: "fullname",
-    type: "text",
-    placeholder: "Enter your fullname",
-  },
-  {
-    id: 3,
-    label: "Email",
-    name: "email",
-    type: "email",
-    placeholder: "Enter your email",
-  },
-  {
-    id: 4,
-    label: "Phone",
-    name: "phone",
-    type: "text",
-    placeholder: "Enter your phone number",
-  },
-  {
-    id: 5,
-    label: "Password",
-    name: "password",
-    type: "password",
-    placeholder: "Enter your password",
-  },
-  // {
-  //   id: 6,
-  //   label: "Role",
-  //   name: "role",
-  //   type: "number",
-  //   placeholder: "Enter role (e.g., 1 for Admin, 2 for Staff, 3 for Customer)",
-  // },
-
-  // {
-  //   id: 7,
-  //   label: "Hotel ID",
-  //   name: "hotelId",
-  //   type: "text",
-  //   placeholder: "Enter hotel ID",
-  // },
-];
-
 export const hotelInputs = [
   {
     id: 1,
@@ -212,13 +159,13 @@ export const hotelInputs = [
 ];
 
 export const roomInputs = [
-  // {
-  //   id: 0,
-  //   label: "Hotel ID",
-  //   name: "hotelId",
-  //   type: "text",
-  //   placeholder: "Enter hotel ID",
-  // },
+  {
+    id: 0,
+    label: "Hotel ID",
+    name: "hotelId",
+    type: "text",
+    placeholder: "Enter hotel ID",
+  },
   {
     id: 1,
     label: "Room Name",
@@ -467,13 +414,13 @@ export const voucherInputs = [
     type: "number",
     placeholder: "Enter discount value",
   },
-  // {
-  //   id: 4,
-  //   label: "Hotel ID",
-  //   name: "hotelId",
-  //   type: "text",
-  //   placeholder: "Enter hotel ID apply voucher (or null)",
-  // },
+  {
+    id: 4,
+    label: "Apply To",
+    name: "applyTo",
+    type: "text",
+    placeholder: "Enter apply to (e.g., tour, hotel, flight)",
+  },
   // {
   //   id: 5,
   //   label: "Service ID",

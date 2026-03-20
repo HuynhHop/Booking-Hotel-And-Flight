@@ -4,15 +4,12 @@ import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 import "../Style/lessontable.scss";
-import { jwtDecode } from "jwt-decode";
 
 const Vouchertable = () => {
   const { darkMode } = useContext(DarkModeContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("accessToken");
-  const decodedToken = jwtDecode(token);
-  const userRole = decodedToken.role; // Lấy role từ token
   const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
@@ -55,17 +52,10 @@ const Vouchertable = () => {
 
   // Cấu hình cột cho DataGrid
   const columns = [
-    { field: "code", headerName: "Voucher", width: 170 },
-    { field: "discountType", headerName: "Discount Type", width: 120 },
-    { field: "discountValue", headerName: "Discount Value", width: 120 },
-    {
-      field: "hotelId",
-      headerName: "Hotel Name",
-      width: 250,
-      renderCell: (params) => {
-        return <div>{params.row.hotelId?.name || "Tất cả khách sạn"}</div>;
-      },
-    },
+    { field: "code", headerName: "Voucher", width: 150 },
+    { field: "discountType", headerName: "Discount Type", width: 150 },
+    { field: "discountValue", headerName: "Discount Value", width: 150 },
+    { field: "applyTo", headerName: "Apply To", width: 200 },
     {
       field: "expiresAt",
       headerName: "Time Expires",
@@ -83,9 +73,6 @@ const Vouchertable = () => {
       headerName: "Action",
       width: 200,
       renderCell: (params) => {
-        // if (userRole === 2) {
-        //   return <div style={{ color: "gray" }}>No Access</div>; // Hiển thị thông báo "No Access" nếu userRole = 2
-        // }
         return (
           <div className="cellAction">
             <Link
@@ -113,13 +100,8 @@ const Vouchertable = () => {
           className="datagrid"
           rows={data}
           columns={columns.concat(actionColumn)}
-          pageSize={10}
-          pageSizeOptions={[5, 10, 20, 50, 100]}
-          initialState={{
-            pagination: {
-              paginationModel: { pageSize: 10, page: 0 },
-            },
-          }}
+          pageSize={8}
+          rowsPerPageOptions={[5]}
           checkboxSelection
           sx={{
             "& .MuiTablePagination-root": {

@@ -23,19 +23,11 @@ const hotelCommentController = require("../controllers/HotelCommentController");
 const favoriteController = require("../controllers/favoriteController");
 const orderFlightController = require("../controllers/orderFlightController");
 const cashController = require("../controllers/cashController");
-const transactionController = require("../controllers/TransactionController");
 
 const upload = multer({ dest: "uploads/" });
 const { imageUpload } = require("../config/cloudinary");
 
 const router = express.Router();
-
-router.post("/transactions/hotel", transactionController.createHotelTransaction);
-router.post("/transactions/flight", transactionController.createFlightTransaction);
-router.get("/transactions/user/:userId", transactionController.getUserTransactions);
-router.get("/transactions/", transactionController.getAllTransactions);
-router.get("/transactions/hotel/:id", transactionController.getHotelTransactionDetail);
-router.get("/transactions/flight/:id", transactionController.getFlightTransactionDetail);
 
 router.get("/cash/:userId", cashController.getOrCreateCash);
 router.put("/cash/:userId", cashController.updateCash);
@@ -99,21 +91,11 @@ router.delete("/rooms/:id", roomController.deleteRoom);
 
 router.post("/orders/create", orderController.createOrder);
 router.get("/orders", orderController.getAllOrder);
-router.get("/orders/count", orderController.getOrderCount);
-router.get("/orders/revenue", orderController.getRevenue);
-router.get("/orders/statistics", orderController.getRecentSixMonthsStatistics);
 router.delete("/orders/:id", orderController.deleteOrder);
 router.get("/orders/user/:userId", orderController.getByUser);
 router.get("/orders/:id", orderController.getOrderById);
 router.put("/orders/:id/status", orderController.updateStatus);
-router.put("/orders/:id/approve-cancel", orderController.approveCancelRequest);
 
-
-// Phê duyệt yêu cầu hủy (chuyển từ processing => cancelled)
-router.put("/order-flight/:id/approve-cancel", orderFlightController.approveCancelRequest);
-
-// Cập nhật trạng thái thanh toán (paid / unpaid)
-router.put("/order-flight/:id/payment-status", orderFlightController.updateStatus);
 router.post("/order-flight/", orderFlightController.create);
 router.get("/order-flight/user/:userId", orderFlightController.getUserOrders);
 router.get("/order-flight/:id", orderFlightController.getOrder);
@@ -125,15 +107,13 @@ router.patch(
 );
 
 router.post("/flights/create", flightController.createFlight);
-router.get("/flights", flightController.getFlights);
 router.put("/flights/:id", flightController.updateFlight);
 router.delete("/flights/:id", flightController.deleteFlight);
-router.get("/flights/filter", flightController.filterFlights);
+router.get("/flights", flightController.getFlights);
 router.get("/flights/:id", flightController.getFlightById);
 router.post("/flights/search", flightController.searchFlights);
 
 router.post("/vouchers/create", voucherController.createVoucher);
-router.get("/vouchers/hotel/:hotelId", voucherController.getVouchersByHotel);
 router.get("/vouchers/apply", voucherController.applyVoucher);
 router.put("/vouchers/:id", voucherController.updateVoucher);
 router.get("/vouchers", voucherController.getAll);
@@ -181,7 +161,6 @@ router.post("/user/login", userController.login);
 router.post("/user/loginGoogle", userController.loginWithGoogle);
 router.post("/user/loginFacebook", userController.loginWithFacebook);
 router.post("/user/createAccount", userController.createAccRole);
-router.post("/user/createHotelManager", userController.createHotelManager);
 
 router.put("/user/refreshAccessToken", userController.refreshAccessToken);
 router.post("/user/resetPassword", userController.resetPassword);

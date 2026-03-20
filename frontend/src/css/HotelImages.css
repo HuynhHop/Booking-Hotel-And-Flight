@@ -1,6 +1,14 @@
 .hotel-images {
   width: 100%;
   margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+/* MAIN IMAGE */
+
+.main-image-wrapper {
+  flex: 2;
 }
 
 .main-image {
@@ -16,43 +24,54 @@
   transform: scale(1.01);
 }
 
-.image-gallery {
+/* SIDE IMAGES */
+
+.side-images {
+  flex: 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 10px;
-  margin-top: 10px;
 }
 
-.image-gallery img {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 4px;
+.side-image-wrapper {
+  position: relative;
   cursor: pointer;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.side-image-wrapper img {
+  width: 100%;
+  height: 126px;
+  object-fit: cover;
   transition: transform 0.3s;
 }
 
-.image-gallery img:hover {
+.side-image-wrapper img:hover {
   transform: scale(1.03);
 }
 
-.more-images {
+/* OVERLAY +X IMAGES */
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
+
+  background: rgba(0, 0, 0, 0.45);
   color: white;
+
   font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 20px;
+
+  border-radius: 6px;
 }
 
-.more-images:hover {
-  background-color: rgba(0, 0, 0, 0.7);
-}
+/* ================= MODAL ================= */
 
-/* Modal styles */
 .image-modal-content {
   display: flex;
   flex-direction: column;
@@ -73,17 +92,23 @@
   object-fit: contain;
 }
 
+/* NAV BUTTON */
+
 .nav-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
+
   border: none;
   width: 40px;
   height: 40px;
+
   border-radius: 50%;
   font-size: 20px;
+
   cursor: pointer;
   z-index: 10;
 }
@@ -100,6 +125,8 @@
   right: 20px;
 }
 
+/* THUMBNAILS */
+
 .thumbnail-container {
   display: flex;
   gap: 10px;
@@ -112,8 +139,10 @@
   width: 80px;
   height: 60px;
   object-fit: cover;
+
   border-radius: 4px;
   cursor: pointer;
+
   opacity: 0.7;
   transition: opacity 0.3s;
 }

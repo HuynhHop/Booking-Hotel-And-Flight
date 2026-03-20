@@ -4,7 +4,6 @@ import { userColumns } from "../Config/datatableSource";
 import { DarkModeContext } from "../Context/darkModeContext";
 import "../Style/datatable.scss";
 import { Link } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 
 const Datatable = () => {
   const { darkMode } = useContext(DarkModeContext);
@@ -15,8 +14,6 @@ const Datatable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem("accessToken");
-  const decodedToken = jwtDecode(token);
-  const userRole = decodedToken.role;
 
   const handleDelete = async (id) => {
     try {
@@ -58,20 +55,19 @@ const Datatable = () => {
         }
         const data = await response.json();
         if (data.success) {
-          const roleMap = {
-            1: "Admin",
-            2: "Staff",
-            3: "Customer",
-            4: "Hotel Manager",
-          };
-
           const formattedData = data.users.map((user) => ({
             id: user._id,
             ...user,
-            roleName: roleMap[user.role] || "Unknown", // chuyển role số thành chữ
           }));
-
-          const sortedData = formattedData.sort((a, b) => b.role - a.role);
+          const sortedData = formattedData.sort((a, b) => {
+            if (a.role === 2 && b.role === 1) {
+              return -1;
+            } else if (a.role === 1 && b.role === 2) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
           setData(sortedData);
         } else {
           setError("No data available");
@@ -92,9 +88,6 @@ const Datatable = () => {
       headerName: "Action",
       width: 150,
       renderCell: (params) => {
-        if (userRole === 2) {
-          return <div style={{ color: "gray" }}>No Access</div>; // Hiển thị thông báo "No Access" nếu userRole = 2
-        }
         return (
           <div className="cellAction">
             <Link
@@ -118,26 +111,9 @@ const Datatable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        <span>User Management</span>
-        <Link
-          to="/admin/users/userId/new"
-          style={{
-            textDecoration: "none",
-            pointerEvents: userRole === 2 ? "none" : "auto",
-            opacity: userRole === 2 ? 0.5 : 1,
-          }}
-        >
+        <span>Manager User</span>
+        <Link to="/admin/users/userId/new" style={{ textDecoration: "none" }}>
           <span className="link">Add New User</span>
-        </Link>
-        <Link
-          to="/admin/user/managerId/new"
-          style={{
-            textDecoration: "none",
-            pointerEvents: userRole === 2 ? "none" : "auto",
-            opacity: userRole === 2 ? 0.5 : 1,
-          }}
-        >
-          <span className="link">Add Hotel Manager</span>
         </Link>
       </div>
       {loading ? (
@@ -149,13 +125,8 @@ const Datatable = () => {
           className="datagrid"
           rows={data}
           columns={userColumns.concat(actionColumn)}
-          pageSize={10}
-          pageSizeOptions={[5, 10, 20, 50, 100]}
-          initialState={{
-            pagination: {
-              paginationModel: { pageSize: 10, page: 0 },
-            },
-          }}
+          pageSize={8}
+          rowsPerPageOptions={[5]}
           checkboxSelection
           sx={{
             "& .MuiTablePagination-root": {

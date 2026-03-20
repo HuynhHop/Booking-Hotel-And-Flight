@@ -21,9 +21,8 @@ const DetailOrder = () => {
         const data = await response.json();
         if (data.success) {
           setOrderData(data.data);
-          console.log(data.data);
         } else {
-          setError("Failed to fetch order details." + data.message);
+          setError("Failed to fetch order details.");
         }
       } catch (err) {
         setError("An error occurred while fetching order details." + err);
@@ -54,16 +53,10 @@ const DetailOrder = () => {
                 className="itemImg"
               />
               <div className="details">
-                {/* <h1 className="itemTitle">
+                <h1 className="itemTitle">
                   {orderData?.hotelName || "Unknown Hotel"}
-                </h1> */}
+                </h1>
 
-                <div className="detailItem">
-                  <span className="itemkey">Hotel Name:</span>
-                  <span className="itemValue">
-                    {orderData?.hotelName || "N/A"}
-                  </span>
-                </div>
                 <div className="detailItem">
                   <span className="itemkey">Room Name:</span>
                   <span className="itemValue">
@@ -79,37 +72,10 @@ const DetailOrder = () => {
                 </div>
 
                 <div className="detailItem">
-                  <span className="itemkey">Price Paid:</span>
+                  <span className="itemkey">Total Price:</span>
                   <span className="itemValue">
                     {orderData?.totalPrice
                       ? `${orderData.totalPrice.toLocaleString()} VNĐ`
-                      : "N/A"}
-                  </span>
-                </div>
-
-                <div className="detailItem">
-                  <span className="itemkey">Base Paid:</span>
-                  <span className="itemValue">
-                    {orderData?.originalPrice
-                      ? `${orderData.originalPrice.toLocaleString()} VNĐ`
-                      : "N/A"}
-                  </span>
-                </div>
-
-                <div className="detailItem">
-                  <span className="itemkey">Commission:</span>
-                  <span className="itemValue">
-                    {orderData?.commission
-                      ? `${orderData.commission.toLocaleString()} VNĐ`
-                      : "N/A"}
-                  </span>
-                </div>
-
-                <div className="detailItem">
-                  <span className="itemkey">Net Revenue:</span>
-                  <span className="itemValue">
-                    {orderData?.netRevenue
-                      ? `${orderData.netRevenue.toLocaleString()} VNĐ`
                       : "N/A"}
                   </span>
                 </div>
@@ -122,27 +88,7 @@ const DetailOrder = () => {
                 </div>
 
                 <div className="detailItem">
-                  <span className="itemkey">Account:</span>
-                  <div className="itemValue" style={{ marginLeft: "8px" }}>
-                    <div>
-                      <strong>Username:</strong>{" "}
-                      {orderData?.user?.username || "N/A"}
-                    </div>
-                    <div>
-                      <strong>Full Name:</strong>{" "}
-                      {orderData?.user?.fullname || "N/A"}
-                    </div>
-                    <div>
-                      <strong>Email:</strong> {orderData?.user?.email || "N/A"}
-                    </div>
-                    <div>
-                      <strong>Phone:</strong> {orderData?.user?.phone || "N/A"}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="detailItem">
-                  <span className="itemkey">User Contact Info:</span>
+                  <span className="itemkey">Contact Info:</span>
                   <span className="itemValue">
                     {orderData?.contactInfo?.fullName || "N/A"} -{" "}
                     {orderData?.contactInfo?.email || "N/A"} -{" "}
@@ -151,21 +97,11 @@ const DetailOrder = () => {
                 </div>
 
                 <div className="detailItem">
-                  <span className="itemkey">
-                    Guest Info(Booking for others):
-                  </span>
+                  <span className="itemkey">Guest Info:</span>
                   <span className="itemValue">
-                    {orderData?.guestInfo?.fullName &&
-                    orderData?.guestInfo?.email &&
-                    orderData?.guestInfo?.phone ? (
-                      <>
-                        {orderData.guestInfo.fullName} -{" "}
-                        {orderData.guestInfo.email} -{" "}
-                        {orderData.guestInfo.phone}
-                      </>
-                    ) : (
-                      "N/A"
-                    )}
+                    {orderData?.guestInfo?.fullName || "N/A"} -{" "}
+                    {orderData?.guestInfo?.email || "N/A"} -{" "}
+                    {orderData?.guestInfo?.phone || "N/A"}
                   </span>
                 </div>
 

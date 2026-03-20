@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import AccountManagement from "../components/AccountManagement.js";
 import BookingHistory from "../components/BookingHistory";
 import FlightHistory from "../components/FlightHistory";
-import CancellationHistory from "../components/CancellationHistory";
+// import CancellationHistory from "../components/CancellationHistory";
 import FavoriteList from "../components/FavoriteList";
 import CashInfo from "../components/CashInfo.js"; 
 import "../css/AccountPage.css";
@@ -33,8 +33,8 @@ const AccountPage = () => {
         return <FavoriteList />;
       case "cash":
         return <CashInfo />;
-      case "cancellation":
-        return <CancellationHistory />;
+      // case "cancellation":
+      //   return <CancellationHistory />;
       default:
         return <AccountManagement />;
     }

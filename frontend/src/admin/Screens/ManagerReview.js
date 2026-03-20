@@ -13,7 +13,7 @@ const ManagerReview = () => {
         <Navbar />
         <div className="productList">
           <div className="datatableTitle">
-            <span>Review Management</span>
+            <span>Manager Review</span>
             {/* <Link
               to="/admin/reviews/reviewId/new"
               style={{ textDecoration: "none" }}

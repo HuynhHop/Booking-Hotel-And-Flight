@@ -13,7 +13,7 @@ const ManagerHomeStay = () => {
         <Navbar />
         <div className="productList">
           <div className="datatableTitle">
-            <span>HomeStay Management</span>
+            <span>Manager HomeStay</span>
             <Link
               to="/admin/homes/homesId/new"
               style={{ textDecoration: "none" }}

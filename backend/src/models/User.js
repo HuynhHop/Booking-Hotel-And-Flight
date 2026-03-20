@@ -43,11 +43,6 @@ const userSchema = new mongoose.Schema(
       },
     },
     role: { type: Number, ref: "Role", required: true, default: 3 },
-    hotelId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Hotel",
-      default: null, // Chỉ áp dụng cho HotelManager
-    },
     isBlocked: { type: Boolean, default: false },
     //refreshToken: { type: String },
     passwordReset: { type: String, default: null },

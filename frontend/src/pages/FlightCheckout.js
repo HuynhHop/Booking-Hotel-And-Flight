@@ -50,15 +50,13 @@ const FlightCheckout = () => {
 
   const handlePaymentReturn = useCallback(
     async (success) => {
-          const savedFlightId = localStorage.getItem("flightId");
       if (success) {
         try {
-          const user = JSON.parse(localStorage.getItem("user"));
           const savedContactInfo = JSON.parse(localStorage.getItem("contactInfo"));
           const savedPassengerInfo = JSON.parse(localStorage.getItem("passengerInfo"));
           const savedNote = localStorage.getItem("note");
           const savedIsBookingForOthers = localStorage.getItem("isBookingForOthers");
-          // const savedFlightId = localStorage.getItem("flightId");
+          const savedFlightId = localStorage.getItem("flightId");
           const savedPrice = localStorage.getItem("price");
 
           const response = await fetch(`${apiUrl}/order-flight/`, {
@@ -77,23 +75,7 @@ const FlightCheckout = () => {
           });
           
           const data = await response.json();
-          if (data.success && data.data && data.data._id) {
-            const orderId = data.data._id;
-
-            // ✅ Bước 2: Tạo Transaction
-            await fetch(`${apiUrl}/transactions/flight`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                user: user._id,
-                order: orderId,
-                flight: savedFlightId,
-                price: Number(savedPrice.toString().replace(/\./g, "")),
-              }),
-            });
-
+          if (data.success) {
             alert("Đặt vé thành công!");
             navigate("/account?tab=flight");
           } else {
@@ -101,10 +83,11 @@ const FlightCheckout = () => {
             navigate(`/checkout-flight/${savedFlightId}`);
           }
         } catch (error) {
-          console.error("Error creating order or transaction:", error);
+          console.error("Error creating order:", error);
           alert("Có lỗi xảy ra khi lưu thông tin đặt vé!");
         }
       } else {
+        const savedFlightId = localStorage.getItem("flightId");
         alert("Thanh toán thất bại. Vui lòng thử lại!");
         navigate(`/checkout-flight/${savedFlightId}`);
       }
@@ -155,7 +138,7 @@ const FlightCheckout = () => {
       localStorage.setItem("passengerInfo", JSON.stringify(passengerInfo));
       localStorage.setItem("note", note);
       localStorage.setItem("isBookingForOthers", isBookingForOthers);
-      localStorage.setItem("flightId",flight._id);
+      localStorage.setItem("flightId", id);
       localStorage.setItem("price", (flight.originalPrice || 0) + (flight.taxPrice || 0));
       localStorage.setItem("image", flight.image);
       localStorage.setItem("departure", flight.departure);
@@ -229,7 +212,38 @@ const FlightCheckout = () => {
                 <span>{flight.departure} → {flight.destination}</span>
               </div>
               
-          
+              <div className="booking-dates">
+                <div className="date-item">
+                  <FaCalendarAlt className="date-icon" />
+                  <div>
+                    <div className="date-label">KHỞI HÀNH</div>
+                    <div className="date-value">
+                      {new Date(flight.departureTime).toLocaleString("vi-VN", {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </div>
+                  </div>
+                </div>
+                <div className="date-item">
+                  <FaCalendarAlt className="date-icon" />
+                  <div>
+                    <div className="date-label">ĐẾN NƠI</div>
+                    <div className="date-value">
+                      {new Date(flight.arrivalTime).toLocaleString("vi-VN", {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
               
               <div className="booking-summary">
                 <div className="summary-item">
@@ -240,7 +254,10 @@ const FlightCheckout = () => {
                   <span className="summary-label">Hạng vé</span>
                   <span className="summary-value">Phổ thông</span>
                 </div>
-
+                <div className="summary-item">
+                  <span className="summary-label">Hành lý</span>
+                  <span className="summary-value">7kg xách tay</span>
+                </div>
               </div>
             </div>
           </div>
@@ -398,7 +415,38 @@ const FlightCheckout = () => {
                 </div>
               </div>
             </div>
-            
+            <div className="booking-dates">
+              <div className="date-item">
+                <FaCalendarAlt className="date-icon" />
+                <div>
+                  <div className="date-label">KHỞI HÀNH</div>
+                  <div className="date-value">
+                    {new Date(flight.departureTime).toLocaleString("vi-VN", {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </div>
+                </div>
+              </div>
+              <div className="date-item">
+                <FaCalendarAlt className="date-icon" />
+                <div>
+                  <div className="date-label">ĐẾN NƠI</div>
+                  <div className="date-value">
+                    {new Date(flight.arrivalTime).toLocaleString("vi-VN", {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="booking-summary">
               <div className="summary-item">
                 <span className="summary-label">Hãng hàng không</span>

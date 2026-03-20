@@ -4,30 +4,23 @@ import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 import "../Style/lessontable.scss";
-import { jwtDecode } from "jwt-decode";
 
-const Airlinetable = ({ filters }) => {
+const Airlinetable = () => {
   const { darkMode } = useContext(DarkModeContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("accessToken");
-  const decodedToken = jwtDecode(token);
-  const userRole = decodedToken.role;
   const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchFlights = async () => {
       try {
-        const query = new URLSearchParams(filters).toString();
-        const url = query
-          ? `${apiUrl}/flights/filter?${query}`
-          : `${apiUrl}/flights`;
-        const response = await fetch(url);
+        const response = await fetch(`${apiUrl}/flights`);
         const data = await response.json();
         if (data) {
-          const formattedData = data.map((flight) => ({
-            id: flight._id,
-            ...flight,
+          const formattedData = data.map((filght) => ({
+            id: filght._id,
+            ...filght,
           }));
           setData(formattedData);
         } else {
@@ -41,7 +34,7 @@ const Airlinetable = ({ filters }) => {
     };
 
     fetchFlights();
-  }, [apiUrl, filters]);
+  }, [apiUrl]);
 
   const handleDelete = async (id) => {
     try {
@@ -63,7 +56,7 @@ const Airlinetable = ({ filters }) => {
     {
       field: "flightNumber",
       headerName: "Flight No.",
-      width: 100,
+      width: 70,
     },
     {
       field: "departureTime",
@@ -89,8 +82,8 @@ const Airlinetable = ({ filters }) => {
         return <div>{date}</div>;
       },
     },
-    { field: "departure", headerName: "Departure", width: 120 },
-    { field: "destination", headerName: "Destination", width: 120 },
+    { field: "departure", headerName: "Departure", width: 100 },
+    { field: "destination", headerName: "Destination", width: 100 },
     { field: "originalPrice", headerName: "Price", width: 100 },
     { field: "seatsAvailable", headerName: "Seats", width: 70 },
   ];
@@ -101,9 +94,6 @@ const Airlinetable = ({ filters }) => {
       headerName: "Action",
       width: 120,
       renderCell: (params) => {
-        // if (userRole === 1) {
-        //   return <div style={{ color: "gray" }}>No Access</div>; // Hiển thị thông báo "No Access" nếu userRole = 2
-        // }
         return (
           <div className="cellAction">
             <Link
@@ -131,13 +121,8 @@ const Airlinetable = ({ filters }) => {
           className="datagrid"
           rows={data}
           columns={columns.concat(actionColumn)}
-          pageSize={10}
-          pageSizeOptions={[5, 10, 20, 50, 100]}
-          initialState={{
-            pagination: {
-              paginationModel: { pageSize: 10, page: 0 },
-            },
-          }}
+          pageSize={8}
+          rowsPerPageOptions={[5]}
           checkboxSelection
           sx={{
             "& .MuiTablePagination-root": {

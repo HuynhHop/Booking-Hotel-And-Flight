@@ -75,20 +75,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.payment-button {
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.payment-button:hover {
-  background-color: #45a049;
-}
-
 .form-grid {
   display: grid;
   grid-template-columns: 150px 1fr;

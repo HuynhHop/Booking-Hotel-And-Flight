@@ -1,22 +1,15 @@
-.chart {
-  flex: 4;
-  padding: 10px;
-  max-width: 1400px;
-  max-height: 480px;
+.chart{
+    flex: 4;
+    padding: 10px;
 
-  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-  border-radius: 10px;
-  color: #616161;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
+    border-radius: 10px;
+    color: #616161;
 
-  .title {
-    margin-bottom: 20px;
-  }
+    .title{
+        margin-bottom: 20px;
+    }
 
-  .recharts-surface {
-    background-color: #f9f9f9; // Thêm màu nền
-    border-radius: 10px; // Bo góc
-    padding: 20px; // Thêm khoảng cách bên trong
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); // Hiệu ứng đổ bóng
-  }
+    
 }

@@ -6,25 +6,6 @@
     background-color: #111;
   }
 
-  .filter {
-    margin-bottom: 20px;
-    display: flex; /* Sử dụng flexbox */
-    justify-content: flex-end; /* Căn sang bên phải */
-    align-items: center;
-  }
-
-  .filter label {
-    margin-right: 10px;
-    font-weight: bold;
-  }
-
-  .filter select {
-    padding: 5px 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-  }
-
   .tableCell {
     display: inline;
     background-color: whitesmoke !important;
@@ -71,25 +52,17 @@
     padding: 5px;
     border-radius: 5px;
 
-    &.Paid {
-      background-color: rgba(0, 128, 0, 0.05);
-      color: rgb(0, 115, 128);
-    }
-    &.Processing {
-      background-color: rgba(255, 217, 0, 0.05);
-      color: goldenrod;
-    }
-    &.Cancelled {
-      background-color: rgba(255, 0, 0, 0.05);
-      color: crimson;
-    }
-    &.Completed {
+    &.active {
       background-color: rgba(0, 128, 0, 0.05);
       color: green;
     }
-    &.Reserved {
+    &.pending {
+      background-color: rgba(255, 217, 0, 0.05);
+      color: goldenrod;
+    }
+    &.passive {
       background-color: rgba(255, 0, 0, 0.05);
-      color: rgb(255, 0, 162);
+      color: crimson;
     }
     &.true {
       background-color: rgba(0, 128, 0, 0.05);
@@ -101,40 +74,31 @@
     }
   }
   .cellAction {
-    display: flex;
     align-items: center;
-    gap: 10px;
+    display: flex;
+    gap: 15px;
 
     .addButton {
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: white;
-      background-color: #74cf6f;
-      font-size: 0.8rem;
-      font-weight: bold;
-      border: none;
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: green;
+      border: 1px dotted rgba(49, 153, 80, 0.6);
       cursor: pointer;
     }
 
     .viewButton {
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: white;
-      background-color: #6f85dc;
-      font-size: 0.8rem;
-      font-weight: bold;
-      border: none;
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: darkblue;
+      border: 1px dotted rgba(0, 0, 139, 0.596);
       cursor: pointer;
     }
 
     .deleteButton {
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: white;
-      background-color: #e57373;
-      font-size: 0.8rem;
-      font-weight: bold;
-      border: none;
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: crimson;
+      border: 1px dotted rgba(220, 20, 60, 0.6);
       cursor: pointer;
     }
   }

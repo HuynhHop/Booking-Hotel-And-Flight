@@ -11,8 +11,10 @@ import "../Style/navbar.scss";
 import { DarkModeContext } from "../Context/darkModeContext";
 const Navbar = () => {
   const { dispatch } = useContext(DarkModeContext);
-  const user = localStorage.getItem("user");
-  const image = user ? JSON.parse(user).avatar : null;
+  const accessToken = localStorage.getItem("accessToken");
+  // const decodedToken = jwtDecode(accessToken);
+  // const image = decodedToken.avatar;
+  const image = "../../assets/user.png";
   return (
     <div className="navbar">
       <div className="navbarContainer">
@@ -48,7 +50,7 @@ const Navbar = () => {
           </div>
           <div className="item">
             <img
-              src={image ? image : "./assets/user.png"}
+              src={image ? image : "../../assets/user.png"}
               alt=""
               className="profileImg"
             />

@@ -11,10 +11,6 @@ const HotelReviews2 = ({ hotelId, closeModal }) => {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const calculateStarRating = (rating) => {
-    const starRating = Math.round((rating / 10) * 5);
-    return Math.max(1, Math.min(5, starRating));
-  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -138,59 +134,48 @@ const HotelReviews2 = ({ hotelId, closeModal }) => {
         {filteredComments.length === 0 ? (
           <p>Chưa có bình luận nào.</p>
         ) : (
-          filteredComments.map((comment, index) => {
-            const starRating = calculateStarRating(comment.rating);
-            return (
-              <div className="review-card" key={index}>
-                <div className="review-avatar">
-                  {comment.name?.charAt(0).toUpperCase() || "?"}
-                </div>
-                <div className="review-content">
-                  <div className="review-header">
-                    <h4>{comment.name || "Ẩn danh"}</h4>
-                    {(user?.fullname === comment.name || user?.isAdmin) && (
-                      <button
-                        className="delete-btn"
-                        title="Xóa bình luận"
-                        onClick={() => handleDeleteComment(comment._id)}
-                      >
-                        <FaTrash />
-                      </button>
-                    )}
-                  </div>
-                  <div className="meta">
-                    <span>
-                      <FaCalendarAlt /> {formatDate(comment.createdAt)}
-                    </span>
-                    <span>
-                      {comment.nights} đêm • {comment.roomType} • {comment.groupType}
-                    </span>
-                  </div>
-                  <div className="rating">
-                    {/* Hiển thị sao dựa trên starRating */}
-                    {[...Array(5)].map((_, i) => (
-                      <FaStar 
-                        key={i} 
-                        color={i < starRating ? "crimson" : "#ccc"} 
-                      />
-                    ))}
-                    <span className="rating-text">
-                      {comment.rating >= 9
-                        ? "Tuyệt vời"
-                        : comment.rating >= 7
-                        ? "Tốt"
-                        : comment.rating >= 5
-                        ? "Tạm ổn"
-                        : comment.rating >= 3
-                        ? "Hơi tệ"
-                        : "Tệ"}
-                    </span>
-                  </div>
-                  <p>{comment.content}</p>
-                </div>
+          filteredComments.map((comment, index) => (
+            <div className="review-card" key={index}>
+              <div className="review-avatar">
+                {comment.name?.charAt(0).toUpperCase() || "?"}
               </div>
-            );
-          })
+              <div className="review-content">
+                <div className="review-header">
+                  <h4>{comment.name || "Ẩn danh"}</h4>
+                  {(user?.fullname === comment.name || user?.isAdmin) && (
+                    <button
+                      className="delete-btn"
+                      title="Xóa bình luận"
+                      onClick={() => handleDeleteComment(comment._id)}
+                    >
+                      <FaTrash />
+                    </button>
+                  )}
+                </div>
+                <div className="meta">
+                  <span>
+                    <FaCalendarAlt /> {formatDate(comment.createdAt)}
+                  </span>
+                  <span>
+                    {comment.nights} đêm • {comment.roomType} • {comment.groupType}
+                  </span>
+                </div>
+                <div className="rating">
+                  {comment.rating} <FaStar color="crimson" />{" "}
+                  {comment.rating >= 9
+                    ? "Tuyệt vời"
+                    : comment.rating >= 7
+                    ? "Tốt"
+                    : comment.rating >= 5
+                    ? "Tạm ổn"
+                    : comment.rating >= 3
+                    ? "Hơi tệ"
+                    : "Tệ"}
+                </div>
+                <p>{comment.content}</p>
+              </div>
+            </div>
+          ))
         )}
       </div>
 

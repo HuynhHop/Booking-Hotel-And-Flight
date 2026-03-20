@@ -9,7 +9,7 @@ const HotelHeader = ({ hotel, onBookClick }) => {
       <h1>{hotel.name}</h1>
       <p className="rating">
         <span className="rating-score">{hotel.starRating}⭐</span> Tuyệt
-        vời
+        vời ({/* {hotel.reviewsCount} */} đánh giá)
       </p>
       <p className="hotel-location">📍 {hotel.address}</p>
       <div className="hotel-price">
